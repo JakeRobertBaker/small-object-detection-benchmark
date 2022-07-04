@@ -1,7 +1,7 @@
 _base_ = ["../yolox/yolox_s_8x8_300e_coco_pipeline.py"]
 
 
-EXP_NAME = "yolox_crop_300_500_cls_60"
+EXP_NAME = "yolox_crop_300_500_cars_trucks"
 DATA_ROOT = "data/xview/"
 BATCH_MULTIPLIER = 1
 LR_MULTIPLIER = 1
@@ -10,11 +10,6 @@ NUM_CLASSES = 60
 DATASET_REPEAT = 50
 TAGS = ["yolox", "crop=300_500", "24epochs", f"num_cls={NUM_CLASSES}", f"repeat={DATASET_REPEAT}"]
 CLASSES = (
-    "Fixed-wing Aircraft",
-    "Small Aircraft",
-    "Cargo Plane",
-    "Helicopter",
-    "Passenger Vehicle",
     "Small Car",
     "Bus",
     "Pickup Truck",
@@ -26,51 +21,9 @@ CLASSES = (
     "Trailer",
     "Truck w/Flatbed",
     "Truck w/Liquid",
-    "Crane Truck",
-    "Railway Vehicle",
-    "Passenger Car",
-    "Cargo Car",
-    "Flat Car",
-    "Tank car",
-    "Locomotive",
-    "Maritime Vessel",
-    "Motorboat",
-    "Sailboat",
-    "Tugboat",
-    "Barge",
-    "Fishing Vessel",
-    "Ferry",
-    "Yacht",
-    "Container Ship",
-    "Oil Tanker",
-    "Engineering Vehicle",
-    "Tower crane",
-    "Container Crane",
-    "Reach Stacker",
-    "Straddle Carrier",
-    "Mobile Crane",
-    "Dump Truck",
-    "Haul Truck",
-    "Scraper/Tractor",
-    "Front loader/Bulldozer",
-    "Excavator",
-    "Cement Mixer",
-    "Ground Grader",
-    "Hut/Tent",
-    "Shed",
-    "Building",
-    "Aircraft Hangar",
-    "Damaged Building",
-    "Facility",
-    "Construction Site",
-    "Vehicle Lot",
-    "Helipad",
-    "Storage Tank",
-    "Shipping container lot",
-    "Shipping Container",
-    "Pylon",
-    "Tower",
 )
+
+NUM_CLASSES = len(CLASSES)
 
 # model settings
 model = dict(
@@ -122,20 +75,20 @@ data = dict(
         dataset=dict(
             type="CocoDataset",
             classes=CLASSES,
-            ann_file=DATA_ROOT + "coco/train.json",
+            ann_file=DATA_ROOT + "coco/train_cars_trucks.json",
             img_prefix=DATA_ROOT + "train_images/",
             pipeline=train_pipeline,
         ),
     ),
     val=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "coco/val.json",
+        ann_file=DATA_ROOT + "coco/val_cars_trucks.json",
         img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
     test=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "coco/val.json",
+        ann_file=DATA_ROOT + "coco/val_cars_trucks.json",
         img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
