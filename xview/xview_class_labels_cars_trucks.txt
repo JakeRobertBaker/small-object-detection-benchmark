@@ -1,0 +1,11 @@
+18:Small Car
+19:Bus
+20:Pickup Truck
+21:Utility Truck
+23:Truck
+24:Cargo Truck
+25:Truck w/Box
+26:Truck Tractor
+27:Trailer
+28:Truck w/Flatbed
+29:Truck w/Liquid
