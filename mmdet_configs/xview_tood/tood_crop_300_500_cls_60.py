@@ -3,7 +3,7 @@ _base_ = ["../tood/tood_r50_fpn_1x_coco.py"]
 
 EXP_NAME = "tood_crop_300_500_cls_60"
 DATA_ROOT = "data/xview/"
-BATCH_MULTIPLIER = 8
+BATCH_MULTIPLIER = 2
 LR_MULTIPLIER = 1
 EVAL_INTERVAL = 3
 NUM_CLASSES = 60
@@ -129,28 +129,28 @@ test_pipeline = [
 
 data = dict(
     samples_per_gpu=2 * BATCH_MULTIPLIER,
-    workers_per_gpu=2,
+    workers_per_gpu=5,
     train=dict(
         type="RepeatDataset",
         times=DATASET_REPEAT,
         dataset=dict(
             type="CocoDataset",
             classes=CLASSES,
-            ann_file=DATA_ROOT + "coco/train.json",
+            ann_file=DATA_ROOT + "coco/train_clean.json",
             img_prefix=DATA_ROOT + "train_images/",
             pipeline=train_pipeline,
         ),
     ),
     val=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "sliced/val_400_0.json",
-        img_prefix=DATA_ROOT + "sliced/val_images_400_0/",
+        ann_file=DATA_ROOT + "coco/val.json",
+        img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
     test=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "sliced/val_400_0.json",
-        img_prefix=DATA_ROOT + "sliced/val_images_400_0/",
+        ann_file=DATA_ROOT + "coco/val.json",
+        img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
 )

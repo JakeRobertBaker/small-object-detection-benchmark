@@ -3,7 +3,7 @@ _base_ = ["../tood/tood_r50_fpn_1x_coco.py"]
 
 EXP_NAME = "tood_crop_300_500_cls_cars_trucks"
 DATA_ROOT = "data/xview/"
-BATCH_MULTIPLIER = 1
+BATCH_MULTIPLIER = 2
 LR_MULTIPLIER = 1
 EVAL_INTERVAL = 3
 DATASET_REPEAT = 50
@@ -81,27 +81,27 @@ test_pipeline = [
 
 data = dict(
     samples_per_gpu=2 * BATCH_MULTIPLIER,
-    workers_per_gpu=2,
+    workers_per_gpu=5,
     train=dict(
         type="RepeatDataset",
         times=DATASET_REPEAT,
         dataset=dict(
             type="CocoDataset",
             classes=CLASSES,
-            ann_file=DATA_ROOT + "coco/train_clean.json",
+            ann_file=DATA_ROOT + "coco/train_cars_trucks.json",
             img_prefix=DATA_ROOT + "train_images/",
             pipeline=train_pipeline,
         ),
     ),
     val=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "coco/val.json",
+        ann_file=DATA_ROOT + "coco/val_cars_trucks.json",
         img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
     test=dict(
         classes=CLASSES,
-        ann_file=DATA_ROOT + "coco/val.json",
+        ann_file=DATA_ROOT + "coco/val_cars_trucks.json",
         img_prefix=DATA_ROOT + "train_images/",
         pipeline=test_pipeline,
     ),
@@ -110,7 +110,7 @@ data = dict(
 # optimizer
 # default 8 gpu
 # /8 for 1 gpu
-optimizer = dict(lr=0.01 / 8 * BATCH_MULTIPLIER * LR_MULTIPLIER, momentum=0.9, weight_decay=0.0001)
+optimizer = dict(lr=0.001 / 8 * BATCH_MULTIPLIER * LR_MULTIPLIER, momentum=0.9, weight_decay=0.0001)
 
 checkpoint_config = dict(interval=1, max_keep_ckpts=1, save_optimizer=False)
 evaluation = dict(interval=EVAL_INTERVAL, metric="bbox", save_best="auto")

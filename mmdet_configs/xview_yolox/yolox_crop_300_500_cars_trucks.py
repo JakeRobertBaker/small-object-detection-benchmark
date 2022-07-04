@@ -3,7 +3,7 @@ _base_ = ["../yolox/yolox_s_8x8_300e_coco_pipeline.py"]
 
 EXP_NAME = "yolox_crop_300_500_cars_trucks"
 DATA_ROOT = "data/xview/"
-BATCH_MULTIPLIER = 1
+BATCH_MULTIPLIER = 2
 LR_MULTIPLIER = 1
 EVAL_INTERVAL = 3
 NUM_CLASSES = 60
@@ -68,7 +68,7 @@ test_pipeline = [
 
 data = dict(
     samples_per_gpu=2 * BATCH_MULTIPLIER,
-    workers_per_gpu=2,
+    workers_per_gpu=5,
     train=dict(
         type="RepeatDataset",
         times=DATASET_REPEAT,
