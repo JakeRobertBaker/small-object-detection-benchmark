@@ -144,7 +144,7 @@ optimizer = dict(
 optimizer_config = dict(grad_clip=None)
 
 max_epochs = 300
-num_last_epochs = 15
+num_last_epochs = 0
 resume_from = None
 interval = 10
 
